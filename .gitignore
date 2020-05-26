@@ -1,0 +1,8 @@
+# Python local files
+/venv/
+*.pyc
+*.cache
+
+# IDE configs
+/.idea/
+/.vscode/
