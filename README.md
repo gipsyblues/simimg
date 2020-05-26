@@ -11,9 +11,9 @@ python main.py ~/Pictures/Nature
 ```
 to list similar images in the terminal, or
 ```shell script
-python main.py ~/Pictures/Nature -view eog
+python main.py ~/Pictures/Nature --view
 ```
-to show similar images in your images viewer (eog in gnome)
+to show similar images in the default images viewer
 
 ## Usage
 

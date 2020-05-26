@@ -22,11 +22,11 @@ def main():
         help="How many matches should be found to treat images as similar",
     )
     parser.add_argument(
-        "-view",
-        metavar="<image viewer>",
-        type=str,
-        default=None,
-        help="Image viewing program to show similar images",
+        "--view",
+        dest="view",
+        action="store_true",
+        help="View images in default image viewer",
+        default=False,
     )
 
     args = parser.parse_args()
@@ -37,22 +37,18 @@ def main():
     si = SimImg(print_progress=True, matches_threshold=threshold)
     si.load(img_dir)
     groups_of_similar = si.find_similar()
+    groups_len = len(groups_of_similar)
 
     for i, group in enumerate(groups_of_similar):
         print(f"Group of similar images #{i + 1}")
-        processes = []
 
         for img in group:
             print(f"\t- {img}")
             if img_viewer:
-                processes.append(subprocess.Popen(f"{img_viewer} {img}", shell=True))
+                subprocess.Popen(f"xdg-open '{img}'", shell=True)
 
-        if img_viewer:
-            input(
-                "Press enter to close the opened group of similar images and show next one"
-            )
-            for p in processes:
-                p.terminate()
+        if img_viewer and i + 1 < groups_len:
+            input("Press Enter to show next group of similar images")
 
     if not groups_of_similar:
         print(f"No similar images has been found at {img_dir}")
